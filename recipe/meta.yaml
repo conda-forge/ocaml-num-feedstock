@@ -1,5 +1,5 @@
 {% set name = "ocaml-num" %}
-{% set version = "1.1" %}
+{% set version = "1.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/ocaml/num/archive/v{{ version }}.tar.gz
-  sha256: 04ac85f6465b9b2bf99e814ddc798a25bcadb3cca2667b74c1af02b6356893f6
+  sha256: c5023104925ff4a79746509d4d85294d8aafa98da6733e768ae53da0355453de
 
 build:
   number: 0
