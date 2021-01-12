@@ -18,10 +18,11 @@ requirements:
     - ocaml
     - ocaml-findlib
   run:
-    - ocaml
-    - ocaml-findlib
+    - {{ pin_compatible("ocaml", max_pin="x.x") }}
 
 test:
+  requires:
+    - ocaml-findlib
   commands:
     - test -f ${PREFIX}/lib/ocaml/num.cmi
     - ocamlfind -query num
