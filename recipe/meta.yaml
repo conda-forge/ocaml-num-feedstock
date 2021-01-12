@@ -10,7 +10,7 @@ source:
   sha256: 015088b68e717b04c07997920e33c53219711dfaf36d1196d02313f48ea00f24
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -23,6 +23,7 @@ requirements:
 test:
   commands:
     - test -f ${PREFIX}/lib/ocaml/num.cmi
+    - ocamlfind -query num
 
 about:
   home: https://github.com/ocaml/num
