@@ -3,7 +3,7 @@ About ocaml-num
 
 Home: https://github.com/ocaml/num
 
-Package license: LGPL-2.1
+Package license: LGPL-2.1-only WITH OCaml-LGPL-linking-exception
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ocaml-num-feedstock/blob/master/LICENSE.txt)
 
