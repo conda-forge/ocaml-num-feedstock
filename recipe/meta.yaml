@@ -19,6 +19,7 @@ requirements:
     - ocaml-findlib
   run:
     - ocaml
+    - ocaml-findlib
 
 test:
   commands:
