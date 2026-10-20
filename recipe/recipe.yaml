@@ -1,0 +1,71 @@
+context:
+  name: ocaml-num
+  version: "1.6"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/ocaml/num/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: b5cce325449aac746d5ca963d84688a627cca5b38d41e636cf71c68b60495b3e
+
+build:
+  number: 0
+  skip:
+    - win
+  script:
+    - dune build --profile=release -p num @install
+    - dune install --prefix="${PREFIX}" --libdir="${PREFIX}/lib/ocaml" num
+
+requirements:
+  build:
+    - ${{ stdlib("c") }}
+    - ${{ compiler("ocaml") }}
+    - ocaml-dune >=2.0
+  host:
+    - ocaml ${{ ocaml_compiler_version }}.*
+
+tests:
+  - package_contents:
+      strict: true
+      files:
+        - lib/ocaml/num/**
+        - lib/ocaml/num_top/**
+        - lib/ocaml/stublibs/dllnum_core_stubs.so
+        - doc/num/**
+  - script:
+      - |
+        mkdir t && cd t
+        echo '(lang dune 2.0)' > dune-project
+        echo '(executable (name t) (modes native byte_complete) (libraries num))' > dune
+        cat > t.ml <<'ML'
+        let () = print_string (Num.string_of_num (Num.power_num (Num.num_of_int 2) (Num.num_of_int 100)))
+        ML
+        dune build ./t.exe ./t.bc.exe
+        test "$(./_build/default/t.exe)" = "1267650600228229401496703205376"
+        test "$(./_build/default/t.bc.exe)" = "1267650600228229401496703205376"
+    requirements:
+      run:
+        - ocaml-compiler
+        - ocaml-dune
+        - if: linux
+          then:
+            - gcc_${{ target_platform }}
+        - if: osx
+          then:
+            - clang_${{ target_platform }}
+            - lld
+            - llvm-tools
+
+about:
+  homepage: https://github.com/ocaml/num
+  repository: https://github.com/ocaml/num
+  summary: The legacy Num library for arbitrary-precision integer and rational arithmetic for OCaml
+  license: LGPL-2.1-only WITH OCaml-LGPL-linking-exception
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - isuruf
+    - slel
